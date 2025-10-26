@@ -1,0 +1,52 @@
+
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* Auralis Design System Tokens */
+:root {
+  /* Brand variables */
+  --auralis-accent: #FF3EBF;
+  --auralis-tech: #00F0FF;
+  --auralis-organic: #A4EAC1;
+  --auralis-text: #111113;
+  --auralis-bg: #FAFAFF;
+  --auralis-neutral: #C5C5CC;
+  --auralis-font-serif: 'IBM Plex Serif', serif;
+  --auralis-font-sans: 'Inter', sans-serif;
+
+  /* Semantic aliases */
+  /* Brand */
+  --color-brand-primary: var(--auralis-accent);
+  --color-brand-secondary: var(--auralis-tech);
+  --color-brand-tertiary: var(--auralis-organic);
+
+  /* Text */
+  --color-text-primary: var(--auralis-text);
+  --color-text-muted: var(--auralis-neutral);
+  --color-text-inverse: var(--auralis-bg);
+
+  /* Backgrounds */
+  --color-bg-primary: var(--auralis-bg);
+  --color-bg-surface: var(--auralis-neutral);
+  --color-bg-inverse: var(--auralis-text);
+
+  /* Typography */
+  --font-heading: var(--auralis-font-serif);
+  --font-body: var(--auralis-font-sans);
+}
+
+[data-theme="dark"] {
+  --auralis-text: #F3F3F7;
+  --auralis-bg: #0D0D11;
+  --auralis-neutral: #1C1C21;
+}
+
+/* Font Utility Classes */
+.font-serif {
+  font-family: var(--auralis-font-serif);
+}
+
+.font-sans {
+  font-family: var(--auralis-font-sans);
+}
