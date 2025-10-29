@@ -1,7 +1,7 @@
 // src/audio/loader/types.ts
 export type LoadingMode = 'preload' | 'stream' | 'lazy';
 
-export interface SingleDesc {
+export interface SingleDescriptor {
   type: 'single';
   id: string;
   src: string;
@@ -10,7 +10,7 @@ export interface SingleDesc {
   preDecode?: boolean;            // force decode on load (alias of preload)
 }
 
-export interface SpriteDesc {
+export interface SpriteDescriptor {
   type: 'sprite';
   id: string;
   src: string;

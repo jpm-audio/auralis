@@ -1,4 +1,4 @@
-// src/audio/bank/AuralisBank.ts
+
 export const AURBANK_MAGIC = 0x41555242; // "AURB" LE
 export const AURBANK_HEADER_SIZE = 64;
 

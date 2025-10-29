@@ -2,6 +2,7 @@ import { Deferred } from "./deferred";
 import generateId from "./generateId";
 import Interpolation from "./interpolation";
 import Pitch from "./pitch";
+import { wait } from "./wait";
 
 /**
  * @description Utils class
@@ -12,4 +13,5 @@ export class Utils {
     public static readonly interpolation = Interpolation;
     public static readonly pitch = Pitch;
     public static readonly deferred = Deferred;
+    public static readonly wait = wait;
 }
