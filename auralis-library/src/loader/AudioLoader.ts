@@ -1,13 +1,11 @@
 import { wait } from "@/utils";
 import type {
-	AssetDesc,
 	BankManifest,
 	LoaderOptions,
 	LoadingMode,
-	LoadedSingle,
-	LoadedSprite,
-	SingleDescriptor,
-	SpriteDescriptor,
+	LoadedAudio,
+	AudioDescription,
+	SpriteClipDefinition,
 } from "./types";
 
 const DEFAULT_AUDIO_LOADER_OPTIONS = {
@@ -43,7 +41,7 @@ export class AudioLoader {
 	/**
 	 *
 	 */
-	private _cache = new Map<string, LoadedSingle | LoadedSprite>();
+	private _cache = new Map<string, LoadedAudio>();
 	/**
 	 *
 	 */
@@ -59,18 +57,18 @@ export class AudioLoader {
 	constructor() {}
 
 	/**
-	 * Increment the cached asset's refCount so we keep track of every active consumer.
-	 * Assets are only unloaded when decRef brings this counter to zero, ensuring we
+	 * Increment the cached audio's refCount so we keep track of every active consumer.
+	 * Audios are only unloaded when decRef brings this counter to zero, ensuring we
 	 * do not release audio still in use (for example, when included in a bank).
-	 * @param id Asset identifier.
+	 * @param id Audio identifier.
 	 */
 	private _incrementReference(id: string): void {
-		const it = this._cache.get(id);
-		if (it) it.refCount++;
+		const audio = this._cache.get(id);
+		if (audio) audio.refCount++;
 	}
 
 	/**
-	 * Build and configure a fresh HTMLAudioElement so streaming assets can play
+	 * Build and configure a fresh HTMLAudioElement so streaming audios can play
 	 * immediately without pre-decoding the audio into memory.
 	 * @param src Audio source URL.
 	 * @return Configured HTMLAudioElement.
@@ -85,7 +83,7 @@ export class AudioLoader {
 
 	/**
 	 * Fetch the audio data from an url and decode it into an AudioBuffer using
-	 * the shared AudioContext so preloaded assets can start playback instantly.
+	 * the shared AudioContext so preloaded audios can start playback instantly.
 	 * @param url Audio resource URL.
 	 * @return Decoded AudioBuffer.
 	 */
@@ -123,20 +121,20 @@ export class AudioLoader {
 		}
 	}
 
-  /**
-   * Normalize asset URLs against the configured baseUrl, leaving absolute HTTP
-   * paths untouched, so every fetch shares consistent resolution rules.
-   * @param url Audio resource URL.
-   * @return Resolved URL.
-   */
+	/**
+	 * Normalize audio URLs against the configured baseUrl, leaving absolute HTTP
+	 * paths untouched, so every fetch shares consistent resolution rules.
+	 * @param url Audio resource URL.
+	 * @return Resolved URL.
+	 */
 	private _resolveUrl(url: string): string {
-    // Is there a baseUrl configured?
+		// Is there a baseUrl configured?
 		if (!this._options.baseUrl) return url;
 
-    // Already absolute url?
+		// Already absolute url?
 		if (/^https?:\/\//i.test(url)) return url;
 
-    // Normalize against baseUrl
+		// Normalize against baseUrl
 		return (
 			this._options.baseUrl.replace(/\/+$/, "") + "/" + url.replace(/^\/+/, "")
 		);
@@ -170,8 +168,8 @@ export class AudioLoader {
 
 	/**
 	 * Memorize a probe audio element and use it to check browser codec support.
-   * @param ext File extension to probe.
-   * @return Whether the extension is playable.
+	 * @param ext File extension to probe.
+	 * @return Whether the extension is playable.
 	 */
 	private _canPlayExtension(ext: string): boolean {
 		const mime = AUDIO_MIME_BY_EXT[ext.toLowerCase()];
@@ -185,63 +183,111 @@ export class AudioLoader {
 		return verdict === "probably" || verdict === "maybe";
 	}
 
-  /**
-   * Extract the file extension from a URL or path, ignoring query strings or fragments.
-   * @param candidate URL or path candidate.
-   * @returns Extracted file extension or undefined.
-   */
+	/**
+	 * Extract the file extension from a URL or path, ignoring query strings or fragments.
+	 * @param candidate URL or path candidate.
+	 * @returns Extracted file extension or undefined.
+	 */
 	private _extractExtension(candidate: string): string | undefined {
-    // Clean query strings or fragments
+		// Clean query strings or fragments
 		const clean = candidate.split(/[?#]/)[0];
-    // Extract extension
+		// Extract extension
 		const match = /\.([^.\/]+)$/.exec(clean);
-    // Return lowercased extension or undefined
+		// Return lowercased extension or undefined
 		return match?.[1]?.toLowerCase();
 	}
 
-
 	/**
 	 * Resolve the effective loading mode, honoring legacy `preDecode` and defaulting to preload.
-   * @param desc Asset description.
-   * @returns Normalized loading mode.
+	 * @param audioDescription Audio description.
+	 * @returns Normalized loading mode.
 	 */
-	private _normalizeMode(desciptor: {
+	private _normalizeMode(audioDescription: {
 		loadingMode?: LoadingMode;
 		preDecode?: boolean;
 	}): LoadingMode {
-		if (desciptor.preDecode) return "preload";
-		return desciptor.loadingMode ?? "preload";
+		if (audioDescription.preDecode) return "preload";
+		return audioDescription.loadingMode ?? "preload";
 	}
 
-	public init(audioContext: AudioContext, options?: LoaderOptions) {
+	/**
+	 * /**
+	 * Store the shared AudioContext and set options before loading starts.
+	 * Call this once during your app bootstrap, prior to any `load` invocation that
+	 * requires an initialized context and configuration.
+	 * @param audioContext Shared AudioContext instance.
+	 * @param options Loader configuration options.
+	 */
+	public init(audioContext: AudioContext, options?: LoaderOptions): void {
 		this._audioContext = audioContext;
 		if (options) this._options = { ...this._options, ...options };
 	}
 
-	public has(id: string) {
+	/**
+	 * Check whether the audio is already loaded and cached.
+	 * @param id Audio identifier.
+	 * @returns Whether the audio is loaded and cached.
+	 */
+	public has(id: string): boolean {
 		return this._cache.has(id);
 	}
 
-	public getBuffer(id: string) {
-		const it = this._cache.get(id);
-		return it?.buffer;
+	/**
+	 * Retrieve the preloaded AudioBuffer for the given audio identifier.
+	 * @param id Audio identifier.
+	 * @returns AudioBuffer if preloaded, undefined otherwise.
+	 */
+	public getBuffer(id: string): AudioBuffer | undefined {
+		const audio = this._cache.get(id);
+		return audio?.buffer;
 	}
 
-	public getMedia(id: string) {
-		const it = this._cache.get(id);
-		return it?.media;
+	/**
+	 * Retrieve the streaming HTMLAudioElement for the given audio identifier.
+	 * @param id Audio identifier.
+	 * @returns
+	 */
+	public getMedia(id: string): HTMLAudioElement | undefined {
+		const audio = this._cache.get(id);
+		return audio?.media;
 	}
 
-	public resolveSpriteClip(spriteId: string, clip: string) {
-		const it = this._cache.get(spriteId) as LoadedSprite | undefined;
-		if (!it || it.kind !== "sprite")
+	/**
+	 *
+	 * @param spriteId
+	 * @param clip
+	 * @returns
+	 */
+	public resolveSpriteClip(
+		spriteId: string,
+		clip: string
+	): SpriteClipDefinition {
+		const audio = this._cache.get(spriteId) as LoadedAudio | undefined;
+		if (!audio || audio.kind !== "sprite") {
 			throw new Error(`Sprite not loaded: ${spriteId}`);
-		const [startMs, durMs] = it.spriteMap[clip] ?? [];
-		if (startMs == null) throw new Error(`Clip not found: ${spriteId}:${clip}`);
+		}
+
+		const spriteMap = audio.spriteMap;
+		if (!spriteMap) {
+			throw new Error(`Sprite has no spriteMap: ${spriteId}`);
+		}
+
+		const [startMs, durMs] = spriteMap[clip] ?? [];
+		if (startMs == null) {
+			throw new Error(`Clip not found: ${spriteId}:${clip}`);
+		}
+
 		return { start: startMs / 1000, end: (startMs + durMs) / 1000 };
 	}
 
-	public async loadBank(manifestOrUrl: BankManifest | string) {
+	/**
+	 * Load every audio described in a bank manifest, accepting either the manifest
+	 * object or a remote URL, and rebuild the group index so grouped clips share
+	 * reference counts. Invoke this when you want to preload a whole bank before
+	 * playback begins.
+	 * @param manifestOrUrl Bank manifest or URL pointing to one.
+	 */
+	public async loadBank(manifestOrUrl: BankManifest | string): Promise<void> {
 		const manifest =
 			typeof manifestOrUrl === "string"
 				? ((await (
@@ -252,21 +298,21 @@ export class AudioLoader {
 				  ).json()) as BankManifest)
 				: manifestOrUrl;
 
-		// Load assets honoring defaults and parallelism
-		const q: Promise<any>[] = [];
-		for (const asset of manifest.assets) {
-			q.push(
-				this.loadAsset({
-					...asset,
+		// Load audios honoring defaults and parallelism
+		const loadPromises: Promise<any>[] = [];
+		for (const audio of manifest.audios) {
+			loadPromises.push(
+				this.loadAudio({
+					...audio,
 					loadingMode:
-						asset.loadingMode ?? manifest.defaults?.loadingMode ?? "preload",
+						audio.loadingMode ?? manifest.defaults?.loadingMode ?? "preload",
 				})
 			);
-			if (q.length >= this._options.maxParallel) {
-				await Promise.all(q.splice(0));
+			if (loadPromises.length >= this._options.maxParallel) {
+				await Promise.all(loadPromises.splice(0));
 			}
 		}
-		if (q.length) await Promise.all(q);
+		if (loadPromises.length) await Promise.all(loadPromises);
 
 		// Index groups
 		this._groupIndex.clear();
@@ -276,45 +322,33 @@ export class AudioLoader {
 		}
 	}
 
-	public async loadAsset(desc: AssetDesc) {
-		if (this._cache.has(desc.id)) {
-			this._incrementReference(desc.id);
+	/**
+	 * Load a single audio, either 'single' or 'sprite' type, into the cache.
+	 * If the audio is already loaded, just increment its reference count.
+	 * @param desc
+	 * @returns
+	 */
+	public async loadAudio(audioDescription: AudioDescription): Promise<void> {
+		if (this._cache.has(audioDescription.id)) {
+			this._incrementReference(audioDescription.id);
 			return;
 		}
-		if (desc.type === "single") return this.loadSingle(desc);
-		else return this.loadSprite(desc);
-	}
 
-	public async loadSingle(descriptor: SingleDescriptor) {
-		const mode = this._normalizeMode(descriptor);
-		const src = this._pickSource(descriptor.src, descriptor.fallback);
-		const entry: LoadedSingle = {
-			kind: "single",
-			mode,
-			refCount: 0,
-			srcResolved: src,
-		};
+		const mode = this._normalizeMode(audioDescription);
+		const src = this._pickSource(
+			audioDescription.src,
+			audioDescription.fallback
+		);
+		let entry: LoadedAudio = {
+				kind: audioDescription.type,
+				mode,
+				refCount: 0,
+				srcResolved: src,
+			}
 
-		if (mode === "preload") {
-			entry.buffer = await this._fetchAndDecode(src);
-		} else if (mode === "stream") {
-			entry.media = this._createMedia(src);
-		} // lazy: defer
-
-		this._cache.set(descriptor.id, entry);
-		this._incrementReference(descriptor.id);
-	}
-
-	public async loadSprite(descriptor: SpriteDescriptor) {
-		const mode = this._normalizeMode(descriptor);
-		const src = this._pickSource(descriptor.src, descriptor.fallback);
-		const entry: LoadedSprite = {
-			kind: "sprite",
-			mode,
-			spriteMap: descriptor.spriteMap,
-			refCount: 0,
-			srcResolved: src,
-		};
+		if (audioDescription.type === "sprite") {
+			entry.spriteMap = audioDescription.spriteMap;
+		}
 
 		if (mode === "preload") {
 			entry.buffer = await this._fetchAndDecode(src);
@@ -322,49 +356,62 @@ export class AudioLoader {
 			entry.media = this._createMedia(src);
 		}
 
-		this._cache.set(descriptor.id, entry);
-		this._incrementReference(descriptor.id);
+		this._cache.set(audioDescription.id, entry);
+		this._incrementReference(audioDescription.id);
 	}
 
 	/**
-	 * Signal that one consumer released the asset: decrement the refCount and
+	 * Signal that one consumer released the audio: decrement the refCount and
 	 * unload immediately once it hits zero so we reclaim the underlying audio.
-	 * @param id Asset identifier.
+	 * @param id Audio identifier.
 	 */
 	public decrementReference(id: string): void {
-		const it = this._cache.get(id);
-		if (!it) return;
-		it.refCount = Math.max(0, it.refCount - 1);
-		if (it.refCount === 0) this.unload(id);
+		const audio = this._cache.get(id);
+		if (!audio) return;
+		audio.refCount = Math.max(0, audio.refCount - 1);
+		if (audio.refCount === 0) this.unload(id);
 	}
 
-	public unload(idOrGroup: string) {
+	/**
+	 * Unload the audio from the cache, releasing underlying audio resources.
+	 * If a group id is provided, unload every member of the group.
+	 * @param idOrGroup Audio or group identifier.
+	 */
+	public unload(idOrGroup: string): void {
 		if (this._groupIndex.has(idOrGroup)) {
-			for (const id of this._groupIndex.get(idOrGroup)!) this.unload(id);
+			for (const id of this._groupIndex.get(idOrGroup)!) {
+				this.unload(id);
+			}
 			this._groupIndex.delete(idOrGroup);
 			return;
 		}
-		const it = this._cache.get(idOrGroup);
-		if (!it) return;
 
-		if (it.media) {
-			it.media.src = "";
-			it.media.load();
+		const audio = this._cache.get(idOrGroup);
+		if (!audio) {
+			return;
+		}
+
+		if (audio.media) {
+			audio.media.src = "";
+			audio.media.load();
 		}
 		this._cache.delete(idOrGroup);
 	}
 
-	/** Lazy materialization on first use for 'lazy' items. */
-	public async ensureReady(id: string) {
-		const it = this._cache.get(id);
-		if (!it) throw new Error(`Asset not loaded: ${id}`);
-		if (it.mode !== "lazy") return;
+	/**
+	 * Lazy materialization on first use for 'lazy' items.
+	 * @param id Audio identifier.
+	 * */
+	public async ensureReady(id: string): Promise<void> {
+		const audio = this._cache.get(id);
+		if (!audio) throw new Error(`Audio not loaded: ${id}`);
+		if (audio.mode !== "lazy") return;
 
 		// Decide by file length heuristic? For now, default to preload for lazy on first touch.
 		// You can extend with HEAD requests to estimate duration via metadata.
-		if (!it.buffer && !it.media) {
+		if (!audio.buffer && !audio.media) {
 			// Simple heuristic: treat lazy as preload for sfx
-			it.buffer = await this._fetchAndDecode(it.srcResolved);
+			audio.buffer = await this._fetchAndDecode(audio.srcResolved);
 		}
 	}
 }

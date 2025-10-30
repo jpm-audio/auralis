@@ -1,36 +1,32 @@
-// src/audio/loader/types.ts
 export type LoadingMode = 'preload' | 'stream' | 'lazy';
+export type AudioType = 'single' | 'sprite';
+export type SpriteMap = Record<string, [number, number]>; // ms
 
-export interface SingleDescriptor {
-  type: 'single';
+export interface AudioDescription {
+  type: AudioType;
   id: string;
   src: string;
   loadingMode?: LoadingMode;
+  spriteMap?: SpriteMap; // ms
   fallback?: string[];            // e.g., ["mp3","aac"]
   preDecode?: boolean;            // force decode on load (alias of preload)
 }
 
-export interface SpriteDescriptor {
-  type: 'sprite';
-  id: string;
-  src: string;
-  loadingMode?: LoadingMode;
-  spriteMap: Record<string, [number, number]>; // ms
-  fallback?: string[];
+export interface SpriteClipDefinition { 
+  start: number; 
+  end: number 
 }
-
-export type AssetDesc = SingleDesc | SpriteDesc;
 
 export interface BankGroup {
   id: string;
-  includes: string[]; // ids
+  includes: string[]; // Audio ids
 }
 
 export interface BankManifest {
   bankId: string;
   version?: number;
   defaults?: { loadingMode?: LoadingMode };
-  assets: AssetDesc[];
+  audios: AudioDescription[];
   groups?: BankGroup[];
   platform?: Record<string, { prefer?: string[] }>;
 }
@@ -42,16 +38,12 @@ export interface LoaderOptions {
   baseUrl?: string;
 }
 
-export interface LoadedSingle {
-  kind: 'single';
+export interface LoadedAudio{
+  kind: AudioType;
   mode: LoadingMode;
   buffer?: AudioBuffer;           // for preload
   media?: HTMLAudioElement;       // for stream
   srcResolved: string;
   refCount: number;
-}
-
-export interface LoadedSprite extends LoadedSingle {
-  kind: 'sprite';
-  spriteMap: Record<string, [number, number]>;
+  spriteMap?: SpriteMap;
 }
