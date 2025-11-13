@@ -1,4 +1,5 @@
-import { wait } from "@/utils";
+
+import { wait } from "../utils/wait";
 import type {
 	BankManifest,
 	LoaderOptions,
@@ -329,6 +330,7 @@ export class AudioLoader {
 	 * @returns
 	 */
 	public async loadAudio(audioDescription: AudioDescription): Promise<void> {
+
 		if (this._cache.has(audioDescription.id)) {
 			this._incrementReference(audioDescription.id);
 			return;
@@ -379,7 +381,9 @@ export class AudioLoader {
 	 */
 	public unload(idOrGroup: string): void {
 		if (this._groupIndex.has(idOrGroup)) {
-			for (const id of this._groupIndex.get(idOrGroup)!) {
+			const groupMembers = this._groupIndex.get(idOrGroup)!;
+			const memberIds = Array.from(groupMembers);
+			for (const id of memberIds) {
 				this.unload(id);
 			}
 			this._groupIndex.delete(idOrGroup);

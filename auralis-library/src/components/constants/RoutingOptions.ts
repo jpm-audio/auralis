@@ -1,6 +1,9 @@
-import { RoutingHandlerOptions } from "../routing/types";
+// Temporarily disabled while testing AudioLoader.
+// Remove this wrapper to restore the original implementation.
 
-export const ROUTING_OPTIONS_DEFAULT: Partial<RoutingHandlerOptions> = {
-    disableOutput: false,
-    disableInput: false,
-};
+// import type { RoutingHandlerOptions } from "../routing/types";
+//
+// export const ROUTING_OPTIONS_DEFAULT: Partial<RoutingHandlerOptions> = {
+//     disableOutput: false,
+//     disableInput: false,
+// };

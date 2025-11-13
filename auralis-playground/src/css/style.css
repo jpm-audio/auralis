@@ -1,62 +1,264 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
+  font-weight: 400; 
+  color: #f5f6fb;
+  font-size: 10px;
+  background-color: #0c1021;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  min-height: 100vh;
+  background: #0c1021;
+  color: inherit;
+}
+
+#root {
   min-height: 100vh;
 }
 
-a {
+.playground-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  width: 100dvw;
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent),
+    radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.12), transparent),
+    #10132a;
+}
+
+.playground-shell__sidebar {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: rgba(12, 16, 33, 0.85);
+  backdrop-filter: blur(24px);
+}
+
+.playground-shell__branding h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.playground-shell__branding p {
+  margin: 0;
+  color: rgba(245, 246, 251, 0.7);
+  font-size: 0.95rem;
+}
+
+.playground-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.playground-shell__nav-item {
+  all: unset;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-a:hover {
-  color: #535bf2;
+.playground-shell__nav-item:is(:hover, :focus-visible) {
+  background: rgba(59, 130, 246, 0.28);
+  transform: translateX(4px);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.playground-shell__nav-item.is-active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.55), rgba(236, 72, 153, 0.55));
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
 }
 
-h2 {
-  font-size: 2.4em;
-  line-height: 1.2;
+.playground-shell__content {
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-h3 {
-  font-size: 1.8em;
-  line-height: 1.3;
+.playground-section__header h2 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
 }
 
-h4 {
-  font-size: 1.4em;
-  line-height: 1.4;
+.playground-section__header p {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(245, 246, 251, 0.75);
+  max-width: 640px;
 }
 
-h5 {
-  font-size: 1.2em;
-  line-height: 1.5;
+.playground-section__body {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 2rem;
 }
 
-h6 {
-  font-size: 1em;
-  line-height: 1.6;
+.playground-section__tests h3 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+.playground-section__tests ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.playground-test {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.045);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.playground-test__name {
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.playground-test__description {
+  font-size: 0.9rem;
+  color: rgba(245, 246, 251, 0.7);
+}
+
+.playground-test:is(:hover, :focus-visible) {
+  background: rgba(59, 130, 246, 0.18);
+  transform: translateY(-2px);
+}
+
+.playground-test.is-active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.55), rgba(236, 72, 153, 0.55));
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.22);
+}
+
+.playground-section__runner {
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: rgba(15, 20, 44, 0.85);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.playground-runner__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.playground-runner__header h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.45rem;
+}
+
+.playground-runner__header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(245, 246, 251, 0.7);
+}
+
+.playground-runner__button {
+  cursor: pointer;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.85), rgba(236, 72, 153, 0.85));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.playground-runner__button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.7;
+}
+
+.playground-runner__button:not(:disabled):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.playground-runner__status {
+  font-size: 0.95rem;
+  color: rgba(245, 246, 251, 0.75);
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.playground-runner__status strong {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.playground-runner__error {
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.6rem;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+.playground-runner__log {
+  margin: 0;
+  padding: 1.2rem;
+  background: rgba(10, 12, 28, 0.9);
+  border-radius: 1rem;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, SFMono, monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  max-height: 320px;
+  overflow: auto;
+  color: rgba(148, 163, 184, 0.95);
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 1080px) {
+  .playground-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .playground-shell__sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .playground-section__body {
+    grid-template-columns: 1fr;
+  }
 }

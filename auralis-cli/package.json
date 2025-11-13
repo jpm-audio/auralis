@@ -1,0 +1,21 @@
+{
+  "name": "audio-packer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "audiosprite --output gameAudio -f howler2 --export ogg,mp3 --gap 0.5 input/* && node parse2PixiSound.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/fluent-ffmpeg": "^2.1.28",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}
