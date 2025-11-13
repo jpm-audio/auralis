@@ -5,17 +5,30 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "audiosprite --output gameAudio -f howler2 --export ogg,mp3 --gap 0.5 input/* && node parse2PixiSound.js"
+    "pack": "audiosprite --output gameAudio -f howler2 --export ogg,mp3 --gap 0.5 input/* && node parse2PixiSound.js",
+    "build": "tsc",
+    "auralis": "ts-node src/auralis-pack.ts",
+    "auralis:help": "ts-node src/auralis-pack.ts --help",
+    "encode": "ts-node src/auralis-pack.ts --encode",
+    "encode:mp3": "ts-node src/auralis-pack.ts --encode --format mp3",
+    "encode:ogg": "ts-node src/auralis-pack.ts --encode --format ogg",
+    "sprites": "ts-node src/auralis-pack.ts --sprites",
+    "sprites:mp3": "ts-node src/auralis-pack.ts --sprites --format mp3",
+    "sprites:ogg": "ts-node src/auralis-pack.ts --sprites --format ogg",
+    "bank": "ts-node src/auralis-pack.ts --bank",
+    "auralis:encode": "ts-node src/auralis-pack.ts --encode",
+    "auralis:sprites": "ts-node src/auralis-pack.ts --sprites",
+    "auralis:bank": "ts-node src/auralis-pack.ts --bank"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@types/fluent-ffmpeg": "^2.1.28",
-    "ffmpeg-static": "^5.2.0",
     "fluent-ffmpeg": "^2.1.3"
   }
 }

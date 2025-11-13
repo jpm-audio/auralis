@@ -1,4 +1,7 @@
-export type AudioCodec = 'wav' | 'ogg' | 'aac' | 'opus' | 'mp3' | 'unknown';
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { AudioCodec } from "../types/packTypes";
+import * as path from 'node:path';
+const ffmpeg = require('fluent-ffmpeg');
 
 function inferAudioCodecFromExtension(path: string): AudioCodec {
     const ext = path.split('.').pop()?.toLowerCase();
@@ -54,6 +57,44 @@ function inferAudioCodecFromHeader(bytes: Uint8Array): AudioCodec {
 
     // etc... (AAC/ADTS, MP4, etc.)
     return 'unknown';
+}
+
+export function getAllAudioFiles(dir: string): string[] {
+    const audioExtensions = ['.wav', '.ogg', '.mp3', '.aac', '.opus', '.m4a'];
+    const files: string[] = [];
+    
+    if (!existsSync(dir)) {
+        return files;
+    }
+    
+    function scanDirectory(currentDir: string) {
+        const items = readdirSync(currentDir);
+        for (const item of items) {
+            const fullPath = path.join(currentDir, item);
+            const stat = statSync(fullPath);
+            
+            if (stat.isDirectory()) {
+                scanDirectory(fullPath);
+            } else if (audioExtensions.includes(path.extname(item).toLowerCase())) {
+                files.push(fullPath);
+            }
+        }
+    }
+    
+    scanDirectory(dir);
+    return files;
+}
+
+export function getAudioDuration(filePath: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+        ffmpeg.ffprobe(filePath, (err: any, metadata: any) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(metadata.format.duration || 0);
+            }
+        });
+    });
 }
 
 export function inferAudioCodec(path: string, bytes: Uint8Array): AudioCodec {
