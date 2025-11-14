@@ -40,6 +40,7 @@ function parseArgs(): CLIArgs {
     const quality = getArgValue(args, '--quality', 'high') as string;
     const bankId = getArgValue(args, '--id');
     const outFile = getArgValue(args, '--out');
+    const silenceGapMs = parseGapMs(getArgValue(args, '--gapms', '0'));
 
     return {
         mode,
@@ -48,8 +49,19 @@ function parseArgs(): CLIArgs {
         format,
         quality,
         bankId,
-        outFile
+        outFile,
+        silenceGapMs
     };
+}
+
+function parseGapMs(value?: string): number {
+    if (!value) return 0;
+    const parsed = Number(value);
+    if (Number.isNaN(parsed) || parsed < 0) {
+        console.warn(`Invalid --gapms value "${value}", defaulting to 0ms.`);
+        return 0;
+    }
+    return parsed;
 }
 
 function getArgValue(args: string[], flag: string, defaultValue?: string): string | undefined {
@@ -77,6 +89,7 @@ COMMON OPTIONS:
   --output <dir>    Output directory (default: ./output)
   --format <fmt>    Audio format: ogg, mp3, wav (default: ogg)
   --quality <q>     Quality: low, medium, high (default: high)
+  --gapms <ms>      Silence gap inserted between sprite entries (default: 0)
   --help, -h        Show this help
 
 ENCODE MODE:

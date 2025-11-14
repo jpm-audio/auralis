@@ -10,6 +10,7 @@ export interface CLIArgs {
     quality: string;
     bankId?: string;
     outFile?: string;
+    silenceGapMs?: number;
 }
 
 export interface AudioSprite {
