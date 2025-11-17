@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "compression": "none",
+  "assets": [
+    {
+      "id": "new_game",
+      "offset": 208,
+      "length": 1010308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_first_point",
+      "offset": 1010516,
+      "length": 344356,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_game",
+      "offset": 1354872,
+      "length": 866302,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_point",
+      "offset": 2221174,
+      "length": 290308,
+      "codec": "wav",
+      "mode": "preload"
+    }
+  ]
+}

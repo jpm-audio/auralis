@@ -1,0 +1,15 @@
+{
+  "src": [
+    "modal.ogg"
+  ],
+  "sprite": {
+    "modal_in": [
+      0,
+      366
+    ],
+    "modal_out": [
+      616,
+      400
+    ]
+  }
+}

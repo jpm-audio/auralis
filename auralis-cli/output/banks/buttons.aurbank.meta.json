@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "compression": "none",
+  "assets": [
+    {
+      "id": "button_down_0",
+      "offset": 760,
+      "length": 25000,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_1",
+      "offset": 25760,
+      "length": 18796,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_2",
+      "offset": 44556,
+      "length": 18442,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_3",
+      "offset": 62998,
+      "length": 19684,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_4",
+      "offset": 82682,
+      "length": 15784,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_5",
+      "offset": 98466,
+      "length": 20746,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_0",
+      "offset": 119212,
+      "length": 59404,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_1",
+      "offset": 178616,
+      "length": 61522,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_2",
+      "offset": 240138,
+      "length": 59392,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_3",
+      "offset": 299530,
+      "length": 56908,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_4",
+      "offset": 356438,
+      "length": 54604,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_5",
+      "offset": 411042,
+      "length": 49108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_0",
+      "offset": 460150,
+      "length": 16846,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_1",
+      "offset": 476996,
+      "length": 17380,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_2",
+      "offset": 494376,
+      "length": 18796,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_3",
+      "offset": 513172,
+      "length": 16846,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_4",
+      "offset": 530018,
+      "length": 14008,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_5",
+      "offset": 544026,
+      "length": 14542,
+      "codec": "wav",
+      "mode": "preload"
+    }
+  ]
+}

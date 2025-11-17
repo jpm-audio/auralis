@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { CLIArgs, InputAsset } from "../types/packTypes";
+import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { CLIArgs, InputAsset } from '../types/packTypes';
 import * as path from 'node:path';
 import { TextEncoder } from 'node:util';
 import { getAllAudioFiles, inferAudioCodec } from './audio-codec';
@@ -17,8 +17,15 @@ function hash32(str: string) {
     return h >>> 0;
 }
 
-async function createAudioBank(files: string[], outBase: string, bankId: string): Promise<void> {
-    const assets: InputAsset[] = files.map((file: string) => {
+async function createAudioBank(inputDir:string , outputDir: string, subFolder: string): Promise<void> {
+    const inputFolder = path.join(inputDir, subFolder);
+    const audioFiles = getAllAudioFiles(inputFolder).sort(); // Sort for consistent order
+    if (audioFiles.length === 0) {
+        console.log(`/!\\ No audio files found in ${inputFolder}`);
+        return;
+    }
+
+    const assets: InputAsset[] = audioFiles.map((file: string) => {
         const id = path.basename(file, path.extname(file)); // logical id from filename
         const buffer = readFileSync(file);
         const bytes = new Uint8Array(
@@ -97,9 +104,17 @@ async function createAudioBank(files: string[], outBase: string, bankId: string)
     for (const e of indexEntries) {
         dv.setUint32(p + 0, e.idHash32, true);
         dv.setUint32(p + 4, Number(e.offset & BigInt(0xffffffff)), true);
-        dv.setUint32(p + 8, Number((e.offset >> BigInt(32)) & BigInt(0xffffffff)), true);
+        dv.setUint32(
+            p + 8,
+            Number((e.offset >> BigInt(32)) & BigInt(0xffffffff)),
+            true
+        );
         dv.setUint32(p + 12, Number(e.length & BigInt(0xffffffff)), true);
-        dv.setUint32(p + 16, Number((e.length >> BigInt(32)) & BigInt(0xffffffff)), true);
+        dv.setUint32(
+            p + 16,
+            Number((e.length >> BigInt(32)) & BigInt(0xffffffff)),
+            true
+        );
         dv.setUint8(p + 20, e.codec);
         dv.setUint8(p + 21, e.flags);
         // 22..23 reserved
@@ -121,11 +136,10 @@ async function createAudioBank(files: string[], outBase: string, bankId: string)
     }
 
     // Write outputs
-    const outBank = outBase.endsWith('.bank') ? outBase : `${outBase}.bank`;
+    const outBank = path.join(outputDir, `${subFolder}.aurbank`);
     writeFileSync(outBank, bank);
 
     const meta = {
-        bankId,
         version: 1,
         compression: 'none',
         assets: indexEntries.map((e, i) => ({
@@ -141,21 +155,20 @@ async function createAudioBank(files: string[], outBase: string, bankId: string)
     };
     writeFileSync(`${outBank}.meta.json`, JSON.stringify(meta, null, 2));
 
-    console.log(`✅ Built bank: ${outBank} (${fileSize} bytes)`);
+    console.log(`- Built bank: ${outBank} (${fileSize} bytes)`);
 }
 
 export async function runBankMode(args: CLIArgs): Promise<void> {
-    if (!args.outFile) {
-        throw new Error('Bank mode requires --out parameter');
+    console.log(`- Generating auralis audio banks from ${args.inputDir}`);
+
+    const inputItems = readdirSync(args.inputDir);
+    const subdirs = inputItems.filter((item) => {
+        const fullPath = path.join(args.inputDir, item);
+        return statSync(fullPath).isDirectory();
+    });
+
+    for (const subdir of subdirs) {
+        console.log(`- Creating audio bank: ${subdir}`);
+        await createAudioBank( args.inputDir, args.outputDir, subdir );
     }
-    
-    const bankId = args.bankId || path.basename(args.outFile);
-    const files = getAllAudioFiles(args.inputDir);
-    
-    if (files.length === 0) {
-        throw new Error('No audio files found in input directory');
-    }
-    
-    console.log(`🏦 Creating audio bank: ${args.outFile}`);
-    await createAudioBank(files, args.outFile, bankId);
 }

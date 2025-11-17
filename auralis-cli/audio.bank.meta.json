@@ -1,0 +1,412 @@
+{
+  "version": 1,
+  "compression": "none",
+  "assets": [
+    {
+      "id": "button_down_0",
+      "offset": 2233,
+      "length": 25000,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_1",
+      "offset": 27233,
+      "length": 18796,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_2",
+      "offset": 46029,
+      "length": 18442,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_3",
+      "offset": 64471,
+      "length": 19684,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_4",
+      "offset": 84155,
+      "length": 15784,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_down_5",
+      "offset": 99939,
+      "length": 20746,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_0",
+      "offset": 120685,
+      "length": 59404,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_1",
+      "offset": 180089,
+      "length": 61522,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_2",
+      "offset": 241611,
+      "length": 59392,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_3",
+      "offset": 301003,
+      "length": 56908,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_4",
+      "offset": 357911,
+      "length": 54604,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_hover_5",
+      "offset": 412515,
+      "length": 49108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_0",
+      "offset": 461623,
+      "length": 16846,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_1",
+      "offset": 478469,
+      "length": 17380,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_2",
+      "offset": 495849,
+      "length": 18796,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_3",
+      "offset": 514645,
+      "length": 16846,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_4",
+      "offset": 531491,
+      "length": 14008,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "button_up_5",
+      "offset": 545499,
+      "length": 14542,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_0",
+      "offset": 560041,
+      "length": 24754,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_1",
+      "offset": 584795,
+      "length": 27646,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_2",
+      "offset": 612441,
+      "length": 33664,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_3",
+      "offset": 646105,
+      "length": 31546,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_4",
+      "offset": 677651,
+      "length": 29254,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_5",
+      "offset": 706905,
+      "length": 29254,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_drop_6",
+      "offset": 736159,
+      "length": 32614,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_0",
+      "offset": 768773,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_1",
+      "offset": 915081,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_2",
+      "offset": 1061389,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_3",
+      "offset": 1207697,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_4",
+      "offset": 1354005,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_5",
+      "offset": 1500313,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_6",
+      "offset": 1646621,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_7",
+      "offset": 1792929,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_8",
+      "offset": 1939237,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_flip_9",
+      "offset": 2085545,
+      "length": 146308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_0",
+      "offset": 2231853,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_1",
+      "offset": 2262961,
+      "length": 22228,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_2",
+      "offset": 2285189,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_3",
+      "offset": 2316297,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_4",
+      "offset": 2347405,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_5",
+      "offset": 2378513,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_6",
+      "offset": 2409621,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_get_7",
+      "offset": 2440729,
+      "length": 31108,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_hint",
+      "offset": 2471837,
+      "length": 290410,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_move",
+      "offset": 2762247,
+      "length": 206056,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_no_move_0",
+      "offset": 2968303,
+      "length": 110542,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_no_move_1",
+      "offset": 3078845,
+      "length": 129826,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_no_move_2",
+      "offset": 3208671,
+      "length": 128842,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_no_move_3",
+      "offset": 3337513,
+      "length": 111334,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_no_move_4",
+      "offset": 3448847,
+      "length": 102784,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_shuffle",
+      "offset": 3551631,
+      "length": 261508,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "card_undo",
+      "offset": 3813139,
+      "length": 60010,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "modal_in",
+      "offset": 3873149,
+      "length": 107698,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "modal_out",
+      "offset": 3980847,
+      "length": 117508,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "new_game",
+      "offset": 4098355,
+      "length": 1010308,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_first_point",
+      "offset": 5108663,
+      "length": 344356,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_game",
+      "offset": 5453019,
+      "length": 866302,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "win_point",
+      "offset": 6319321,
+      "length": 290308,
+      "codec": "wav",
+      "mode": "preload"
+    }
+  ]
+}

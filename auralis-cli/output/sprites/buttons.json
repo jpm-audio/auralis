@@ -1,0 +1,79 @@
+{
+  "src": [
+    "buttons.ogg"
+  ],
+  "sprite": {
+    "button_down_0": [
+      0,
+      79
+    ],
+    "button_down_1": [
+      329,
+      57
+    ],
+    "button_down_2": [
+      636,
+      56
+    ],
+    "button_down_3": [
+      942,
+      60
+    ],
+    "button_down_4": [
+      1252,
+      47
+    ],
+    "button_down_5": [
+      1549,
+      64
+    ],
+    "button_hover_0": [
+      1863,
+      198
+    ],
+    "button_hover_1": [
+      2311,
+      206
+    ],
+    "button_hover_2": [
+      2767,
+      198
+    ],
+    "button_hover_3": [
+      3215,
+      190
+    ],
+    "button_hover_4": [
+      3655,
+      182
+    ],
+    "button_hover_5": [
+      4086,
+      163
+    ],
+    "button_up_0": [
+      4499,
+      50
+    ],
+    "button_up_1": [
+      4799,
+      52
+    ],
+    "button_up_2": [
+      5102,
+      57
+    ],
+    "button_up_3": [
+      5409,
+      50
+    ],
+    "button_up_4": [
+      5709,
+      41
+    ],
+    "button_up_5": [
+      6000,
+      42
+    ]
+  }
+}

@@ -8,8 +8,6 @@ export interface CLIArgs {
     outputDir: string;
     format: string;
     quality: string;
-    bankId?: string;
-    outFile?: string;
     silenceGapMs?: number;
 }
 

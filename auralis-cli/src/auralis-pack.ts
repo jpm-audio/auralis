@@ -38,8 +38,6 @@ function parseArgs(): CLIArgs {
     const outputDir = getArgValue(args, '--output', './output') as string;
     const format = getArgValue(args, '--format', 'ogg') as string;
     const quality = getArgValue(args, '--quality', 'high') as string;
-    const bankId = getArgValue(args, '--id');
-    const outFile = getArgValue(args, '--out');
     const silenceGapMs = parseGapMs(getArgValue(args, '--gapms', '0'));
 
     return {
@@ -48,8 +46,6 @@ function parseArgs(): CLIArgs {
         outputDir,
         format,
         quality,
-        bankId,
-        outFile,
         silenceGapMs
     };
 }
@@ -58,7 +54,7 @@ function parseGapMs(value?: string): number {
     if (!value) return 0;
     const parsed = Number(value);
     if (Number.isNaN(parsed) || parsed < 0) {
-        console.warn(`Invalid --gapms value "${value}", defaulting to 0ms.`);
+        console.warn(`/!\\ Invalid --gapms value "${value}", defaulting to 0ms.`);
         return 0;
     }
     return parsed;
@@ -132,7 +128,7 @@ EXAMPLES:
                 throw new Error(`Unknown mode: ${args.mode}`);
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error(error);
         process.exit(1);
     }
 })();

@@ -9,7 +9,7 @@ const ffmpeg = require('fluent-ffmpeg');
 export async function generateAudioSprite(inputDir: string, outputDir: string, spriteName: string, format: string, quality: string, silenceGapMs: number): Promise<void> {
     const audioFiles = getAllAudioFiles(inputDir).sort(); // Sort for consistent order
     if (audioFiles.length === 0) {
-        console.log(`No audio files found in ${inputDir}`);
+        console.log(`/!\\ No audio files found in ${inputDir}`);
         return;
     }
     
@@ -24,7 +24,7 @@ export async function generateAudioSprite(inputDir: string, outputDir: string, s
     if (!existsSync(outputDir)) {
         require('fs').mkdirSync(outputDir, { recursive: true });
     }
-console.log(silenceGapMs);
+    
     if (silenceGapMs > 0 && audioFiles.length > 1) {
         silenceFile = path.resolve(outputDir, `temp_${spriteName}_silence.wav`);
         await createSilenceAudio(silenceFile, silenceGapSeconds);
@@ -96,10 +96,10 @@ console.log(silenceGapMs);
             require('fs').unlinkSync(silenceFile);
         }
         
-        console.log(`✅ Generated sprite: ${spriteName} (${audioFiles.length} sounds)`);
+        console.log(`- Generated sprite: ${spriteName} (${audioFiles.length} sounds)`);
         
     } catch (error) {
-        console.error(`❌ Failed to generate sprite ${spriteName}:`, error);
+        console.error(`/!\\ Failed to generate sprite ${spriteName}:`, error);
         
         // Cleanup temp file on error
         if (existsSync(tempListFile)) {
@@ -140,7 +140,7 @@ async function createSilenceAudio(filePath: string, durationSeconds: number): Pr
 }
 
 export async function runSpritesMode(args: CLIArgs): Promise<void> {
-    console.log(`🎼 Generating audio sprites from ${args.inputDir}`);
+    console.log(`- Generating audio sprites from ${args.inputDir}`);
     
     // Get all subdirectories in input
     const inputItems = readdirSync(args.inputDir);

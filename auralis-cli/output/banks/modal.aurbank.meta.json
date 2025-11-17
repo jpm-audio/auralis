@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "compression": "none",
+  "assets": [
+    {
+      "id": "modal_in",
+      "offset": 133,
+      "length": 107698,
+      "codec": "wav",
+      "mode": "preload"
+    },
+    {
+      "id": "modal_out",
+      "offset": 107831,
+      "length": 117508,
+      "codec": "wav",
+      "mode": "preload"
+    }
+  ]
+}

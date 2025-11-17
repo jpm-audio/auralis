@@ -1,0 +1,23 @@
+{
+  "src": [
+    "notification.ogg"
+  ],
+  "sprite": {
+    "new_game": [
+      0,
+      3500
+    ],
+    "win_first_point": [
+      3750,
+      1188
+    ],
+    "win_game": [
+      5188,
+      3000
+    ],
+    "win_point": [
+      8438,
+      1000
+    ]
+  }
+}

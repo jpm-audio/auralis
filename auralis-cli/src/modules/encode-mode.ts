@@ -14,14 +14,13 @@ export function convertAudioFile(inputPath: string, outputPath: string, format: 
             command.audioCodec('libvorbis').addOptions(qualityMap[quality as keyof typeof qualityMap]?.split(' ') || ['-q:a', '6']);
         } else if (format === 'mp3') {
             const bitrateMap = { low: '128k', medium: '192k', high: '256k' };
-            console.log("Set the codec");
+            console.log("- Set the codec");
             command.audioCodec('libmp3lame').audioBitrate(bitrateMap[quality as keyof typeof bitrateMap] || '192k');
-            console.log("After setting bitrate");
+            console.log("- After setting bitrate");
         } else if (format === 'wav') {
             command.audioCodec('pcm_s16le');
         }
         
-        console.log(outputPath);
         command
             .output(outputPath)
             .on('end', () => resolve())
@@ -31,11 +30,11 @@ export function convertAudioFile(inputPath: string, outputPath: string, format: 
 }
 
 export async function runEncodeMode(args: CLIArgs): Promise<void> {
-    console.log(`Encoding audio files from ${args.inputDir} to ${args.outputDir}`);
+    console.log(`- Encoding audio files from ${args.inputDir} to ${args.outputDir}`);
     
     const inputFiles = getAllAudioFiles(args.inputDir);
     if (inputFiles.length === 0) {
-        console.log('No audio files found in input directory');
+        console.log('/!\\ No audio files found in input directory');
         return;
     }
     
@@ -52,12 +51,12 @@ export async function runEncodeMode(args: CLIArgs): Promise<void> {
         
         try {
             await convertAudioFile(inputFile, outputFile, args.format, args.quality);
-            console.log(`✅ ${relativePath} → ${path.basename(outputFile)}`);
+            console.log(`- ${relativePath} → ${path.basename(outputFile)}`);
             processed++;
         } catch (error) {
-            console.error(`❌ Failed to convert ${relativePath}:`, error);
+            console.error(`/!\\ Failed to convert ${relativePath}:`, error);
         }
     }
     
-    console.log(`\n🎉 Processed ${processed}/${inputFiles.length} files`);
+    console.log(`\n - Processed ${processed}/${inputFiles.length} files`);
 }
