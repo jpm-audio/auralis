@@ -157,7 +157,7 @@ export class ParamAutomation extends EventEmitter implements Playable {
 	 */
     protected _update(ticker: AudioTicker): void {
         let isComplete = false;
-        this._elapsed += ticker.deltaSeconds;
+        this._elapsed += ticker.elapsedSeconds;
 
         if (this._elapsed >= this.duration) {
             this._elapsed = this.duration;
@@ -223,7 +223,7 @@ export class ParamAutomation extends EventEmitter implements Playable {
         }
 
         // If the duration is less than the ticker delta time, we can immediately set the value and resolve
-        if (this.duration <= audioEngine.ticker.targetDeltaSeconds) {
+        if (this.duration <= audioEngine.ticker.elapsedSeconds) {
             this._updateValue(this.to);
             return this;
         }

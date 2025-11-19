@@ -2,19 +2,13 @@ import { AudioMixer } from '@/components/routing/AudioMixer';
 import { Utils } from '@/utils';
 import { GLOBAL_CONFIG } from './AudioGlobalConfig';
 import { AudioTicker } from './AudioTicker';
-import {
-    sound,
-    type AddSoundOptions,
-    type MediaInstanceInterface,
-    type PlayOptions,
-    type SoundSourceMap,
-    type SoundSpriteData,
-} from '../sound';
 import type {
     AudioCatalogItem,
     AudioGlobalConfig,
     AudioLoadOptions,
 } from './types';
+import type { SoundSpriteData } from '@/sound';
+import type { AddSoundOptions, MediaInstanceInterface, PlayOptions, SoundSourceMap } from '@/sound/types';
 //
 /**
  *  This class is used to manage the audio, including loading sounds, controlling volume, and managing audio buses.
@@ -43,9 +37,9 @@ export class AudioEngine {
     /**
      * Audio mixer instance used to manage audio routing and mixing.
      */
-    private _mixer: AudioMixer;
+    private _mixer!: AudioMixer;
 
-    private _catalog: Map<string, AudioCatalogItem>;
+    private _catalog!: Map<string, AudioCatalogItem>;
     /**
      * Return the current AudioContext instance.
      */

@@ -1,4 +1,4 @@
-import AudioBus from "./AudioBus";
+import { AudioBus } from "./AudioBus";
 import type { AudioBusOptions } from "./types";
 
 /**

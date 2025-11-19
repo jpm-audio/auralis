@@ -1,6 +1,7 @@
 import type { ParamAutomationOptions } from "@/components/parameters/types";
 import { AudioMultipleClipMode } from "@/components/channels/types";
 import type { SoundSpriteData } from "@/sound/SoundObject";
+import type { AudioTicker } from "./AudioTicker";
 
 /**
  * Interface representing the global configuration for the audio engine.
@@ -59,10 +60,15 @@ export interface AudioCatalogItem {
 	duration: number;
 }
 
-export interface AudioTickerOptions{
+export interface AudioTickerOptions {
 	audioContext: AudioContext;
-    tempo?: 120;
-    subdivision?: 1;
-    lookahead?: 25;
-    scheduleAheadTime?: 0.1;
+    tempo?: number;
+    subdivision?: number;
+    lookahead?: number;
+    scheduleAheadTime?: number;
 }
+
+/**
+ * Signature for tick events.
+ */
+export type AudioTickerTickCallback = (ticker: AudioTicker) => void;

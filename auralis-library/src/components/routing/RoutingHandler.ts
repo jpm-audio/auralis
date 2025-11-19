@@ -2,8 +2,8 @@ import { Interpolation } from "@/utils/Interpolation";
 import {
     AudioBusEvents,
     type AudioBusEventInfo,
+    type AudioBusInterface,
 } from "@/components/channels";
-import type { AudioBus } from "@/components/channels/AudioBus";
 import type { RoutingHandlerInterface, RoutingHandlerOptions } from "./types";
 
 /**
@@ -15,15 +15,15 @@ export class RoutingHandler implements RoutingHandlerInterface {
     /**
 	 * The audio bus that owns this routing handler
 	 */
-    protected _owner: AudioBus;
+    protected _owner: AudioBusInterface;
     /**
 	 * The output channel of this routing handler
 	 */
-    protected _destination: AudioBus | undefined;
+    protected _destination: AudioBusInterface | undefined;
     /**
 	 * The input channels of this routing handler
 	 */
-    protected _inputs: Map<string, AudioBus>;
+    protected _inputs: Map<string, AudioBusInterface>;
     /**
 	 * The volume value interpolated with the output channel value and this one
 	 */
@@ -47,7 +47,7 @@ export class RoutingHandler implements RoutingHandlerInterface {
     /**
 	 * Returns the output channel of this routing handler
 	 */
-    public get output(): AudioBus | undefined {
+    public get output(): AudioBusInterface | undefined {
         return this._destination;
     }
     /**
@@ -210,7 +210,7 @@ export class RoutingHandler implements RoutingHandlerInterface {
 	 * Get an input channel by name
 	 * @param name The name of the input channel
 	 */
-    public getInput(name: string): AudioBus | undefined {
+    public getInput(name: string): AudioBusInterface | undefined {
         return this._inputs.get(name);
     }
     /**
@@ -231,7 +231,7 @@ export class RoutingHandler implements RoutingHandlerInterface {
 	 * @param destination The channel to connect to
 	 * @returns The connected channel or undefined if the connection failed
 	 */
-    public connectOutput(destination: AudioBus): AudioBus | undefined {
+    public connectOutput(destination: AudioBusInterface): AudioBusInterface | undefined {
         if (this._disableOutput) {
             console.warn(
                 `RoutingHandler::connectOutput - AudioBus ${this._owner.name} cannot connect to ${destination.name} because output is disabled`
@@ -264,7 +264,7 @@ export class RoutingHandler implements RoutingHandlerInterface {
             this.updateInterpolatedValues();
 
             // Notify output to disconnect this channel from its inputs
-            source.routing.disconnectInput(this._owner as AudioBus);
+            source.routing.disconnectInput(this._owner as AudioBusInterface);
 
             return true;
         }
@@ -276,7 +276,7 @@ export class RoutingHandler implements RoutingHandlerInterface {
 	 * @param source The source channel to connect
 	 * @returns True if the connection was successful, false otherwise
 	 */
-    public connectInput(source: AudioBus): boolean {
+    public connectInput(source: AudioBusInterface): boolean {
         if (this._disableInput) {
             console.warn(
                 `RoutingHandler::connectInput - AudioBus ${this._owner.name} cannot connect to ${source.name} because input is disabled`
@@ -301,12 +301,12 @@ export class RoutingHandler implements RoutingHandlerInterface {
 	 * @param audioBus Bus to disconnect from inputs
 	 * @returns The name of the disconnectd channel or undefined if not found
 	 */
-    public disconnectInput(source?: AudioBus): boolean {
+    public disconnectInput(source?: AudioBusInterface): boolean {
         // Remove All
         if (source === undefined) {
             if (this._inputs.size > 0) {
                 this._inputs.forEach((input) => {
-                    this.disconnectInput(input as AudioBus);
+                    this.disconnectInput(input as AudioBusInterface);
                 });
                 return true;
             }

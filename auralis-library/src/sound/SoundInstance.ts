@@ -1,26 +1,4 @@
-export interface PlayOptions {
-	id?: string;
-	loop?: boolean;
-	volume?: number;
-	muted?: boolean;
-	speed?: number;
-	start?: number;
-	sprite?: string;
-	complete?: () => void;
-}
-
-export interface MediaInstanceInterface {
-	id: string;
-	loop: boolean;
-	muted: boolean;
-	paused: boolean;
-	progress: number;
-	speed: number;
-	volume: number;
-	stop(): void;
-	pause(): void;
-	resume(): void;
-}
+import type { MediaInstanceInterface, PlayOptions } from "./types";
 
 export class SoundInstance implements MediaInstanceInterface {
 	public id: string;
@@ -42,6 +20,19 @@ export class SoundInstance implements MediaInstanceInterface {
 		this.speed = options.speed ?? 1;
 		this.volume = options.volume ?? 1;
 		this._onComplete = options.complete;
+	}
+
+	private clearTimer(): void {
+		if (this._timer != null) {
+			clearTimeout(this._timer);
+			this._timer = undefined;
+		}
+	}
+
+	private invokeComplete(): void {
+		if (this._onComplete) {
+			this._onComplete();
+		}
 	}
 
 	public stop(): void {
@@ -74,16 +65,8 @@ export class SoundInstance implements MediaInstanceInterface {
 		}, durationMs);
 	}
 
-	private clearTimer(): void {
-		if (this._timer != null) {
-			clearTimeout(this._timer);
-			this._timer = undefined;
-		}
-	}
-
-	private invokeComplete(): void {
-		if (this._onComplete) {
-			this._onComplete();
-		}
+	public destroy(): void {
+		this.clearTimer();
+		this._onComplete = undefined;
 	}
 }

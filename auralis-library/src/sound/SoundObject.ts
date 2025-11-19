@@ -1,4 +1,4 @@
-import type { PlayOptions } from "./SoundInstance";
+import type { PlayOptions } from "./types";
 
 export interface SoundSpriteData {
 	start: number;

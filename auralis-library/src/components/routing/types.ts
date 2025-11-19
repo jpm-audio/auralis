@@ -1,4 +1,4 @@
-import type { AudioBus, AudioBusOptions } from "@/components/channels";
+import type { AudioBusInterface, AudioBusOptions } from "@/components/channels";
 
 
 /**
@@ -6,7 +6,7 @@ import type { AudioBus, AudioBusOptions } from "@/components/channels";
  */
 export interface RoutingHandlerOptions {
 	/** The audio bus that will own the routing handler*/
-	owner: AudioBus;
+	owner: AudioBusInterface;
 
 	/** Indicates if the output connection is disabled */
 	disableOutput?: boolean;
@@ -22,7 +22,7 @@ export interface RoutingHandlerInterface {
 	/**
 	 * Gets the current output destination channel
 	 */
-	readonly output: AudioBus | undefined;
+	readonly output: AudioBusInterface | undefined;
 	/**
 	 * Returns the mute value interpolated with the output channel value and this one
 	 */
@@ -52,7 +52,7 @@ export interface RoutingHandlerInterface {
 	 * Gets an input channel by name
 	 * @param name The name of the input channel
 	 */
-	getInput(name: string): AudioBus | undefined;
+	getInput(name: string): AudioBusInterface | undefined;
 
 	/**
 	 * Checks if this handler has an output connection
@@ -69,7 +69,7 @@ export interface RoutingHandlerInterface {
 	 * Connects this channel's output to a destination channel
 	 * @param destination The channel to connect to
 	 */
-	connectOutput(destination: AudioBus): AudioBus | undefined;
+	connectOutput(destination: AudioBusInterface): AudioBusInterface | undefined;
 
 	/**
 	 * Disconnects the current output channel
@@ -80,13 +80,13 @@ export interface RoutingHandlerInterface {
 	 * Connects an input source to this channel
 	 * @param source The source channel to connect
 	 */
-	connectInput(source: AudioBus): boolean;
+	connectInput(source: AudioBusInterface): boolean;
 
 	/**
 	 * Disconnects an input source or all inputs if no source is specified
 	 * @param source Optional source to disconnect
 	 */
-	disconnectInput(source?: AudioBus): boolean;
+	disconnectInput(source?: AudioBusInterface): boolean;
 
 	/**
 	 * Updates the interpolated values for volume, mute, and pan
@@ -105,11 +105,11 @@ export interface IAudioMixer {
 	/**
 	 * Gets the master bus of the mixer
 	 */
-	readonly master: AudioBus;
+	readonly master: AudioBusInterface;
 
 	/**
 	 * Creates a new audio bus with the given options
 	 * @param options The options for the new audio bus
 	 */
-	createBus(options: AudioBusOptions): AudioBus;
+	createBus(options: AudioBusOptions): AudioBusInterface;
 }

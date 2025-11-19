@@ -1,15 +1,8 @@
-import { SoundInstance, type MediaInstanceInterface, type PlayOptions } from "./SoundInstance";
-import { SoundObject, type SoundDefinition, type SoundSpriteData } from "./SoundObject";
+import { SoundInstance } from "./SoundInstance";
+import { SoundObject, type SoundDefinition } from "./SoundObject";
+import type { AddSoundOptions, MediaInstanceInterface, PlayOptions, SoundSourceMap } from "./types";
 
-export interface AddSoundOptions {
-	preload?: boolean;
-	url: string | string[];
-	sprites?: Record<string, SoundSpriteData>;
-	duration?: number;
-	loaded?: (error: Error | null) => void;
-}
 
-export type SoundSourceMap = Record<string, AddSoundOptions>;
 
 export class SoundBankManager {
 	private readonly _sounds = new Map<string, SoundObject>();
