@@ -1,5 +1,5 @@
 
-import { wait } from "../utils/wait";
+import { wait } from "@/utils/wait";
 import type {
 	BankManifest,
 	LoaderOptions,
